@@ -4,6 +4,8 @@ Any help is welcome
 
 ## To-do
 
-- [ ] Call notion integration API
+- [x] Call notion integration API
 - [ ] Adjust the style Sheet to be more UX
 - [ ] Need to add tests in a code base
+- [ ] Add validation if the link was set in a database
+  - [ ] And Update Name
