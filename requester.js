@@ -15,7 +15,10 @@ export default class RequesterNotion {
     xhr.open("POST", "https://api.notion.com/v1/pages");
     xhr.setRequestHeader("Notion-Version", "2022-06-28");
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Authorization", "Bearer " + `${expSecret.GetSecret}`);
+    xhr.setRequestHeader(
+      "Authorization",
+      "Bearer " + `${expSecret.GetSecret()}`
+    );
 
     xhr.send(data);
   }
