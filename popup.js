@@ -1,7 +1,27 @@
+import RequesterNotion from "./requester.js";
+import Exports from "./exportEnviroments.js";
+
 var btnEnviar = document.getElementById("btnEnviar");
 
+btnEnviar.addEventListener("click", async () => {
+  var queryInfo = { active: true, currentWindow: true };
+  var tab = await chrome.tabs.query(queryInfo);
+  var url = tab[0].url;
+
+  if (document.getElementById("txtName").value.length > 0) {
+    var name = document.getElementById("txtName").value;
+    sendToNotion(name, url);
+    alert(`O link foi salvo com o nome "${name}"`);
+  } else {
+    alert("Um nome precisa ser digitado..;)");
+  }
+});
+
+function VerifyIfLinkExists(link) {} //TODO
+
 async function sendToNotion(textTitle, link) {
-  var databaseId = process.env.DATABASEID;
+  var expDatabaseId = new Exports();
+  var databaseId = expDatabaseId.GetDatabaseId();
 
   const data = JSON.stringify({
     parent: {
@@ -26,29 +46,6 @@ async function sendToNotion(textTitle, link) {
     },
   });
 
-  const xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === this.DONE) {
-      console.log(this.responseText);
-    }
-  });
-
-  var secret = process.env.SECRETKEY;
-  xhr.open("POST", "https://api.notion.com/v1/pages");
-  xhr.setRequestHeader("Notion-Version", "2022-06-28");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader("Authorization", "Bearer " + `${secret}`);
-
-  xhr.send(data);
+  var requestNotion = new RequesterNotion();
+  requestNotion.CallNotion(data);
 }
-
-btnEnviar.addEventListener("click", async () => {
-  var queryInfo = { active: true, currentWindow: true };
-  var tab = await chrome.tabs.query(queryInfo);
-  var url = tab[0].url;
-  var sname = document.getElementById("txtName");
-
-  sendToNotion(sname.value, url);
-});
