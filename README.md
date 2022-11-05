@@ -5,7 +5,7 @@ Any help is welcome
 ## To-do
 
 - [x] Call notion integration API
-- [ ] Add secret values and database Id at .env file
+- [x] Add secret values and database Id at .env file
 - [ ] Adjust the style Sheet to be more UX
 - [ ] Need to add tests in a code base
 - [ ] Add validation if the link was set in a database
